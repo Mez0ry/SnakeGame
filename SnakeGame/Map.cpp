@@ -2,9 +2,9 @@
 
 Map::Map(const int& row,const int& col)
 {
-	mtrx.row = row; // 26
-	mtrx.col = col;// 36
-	mapPoints = new uint8_t * [mtrx.row]; // x = 20;
+	mtrx.row = row; 
+	mtrx.col = col;
+	mapPoints = new uint8_t * [mtrx.row]; 
 	for (int i = 0; i < mtrx.row; i++) mapPoints[i] = new uint8_t[mtrx.col];
 
 }
@@ -39,39 +39,12 @@ void Map::CleanMap()
 
 void Map::fillMap()
 {
-	bool end = false;
-	int x{}, y{};
-	while (y < mtrx.col){
-		mapPoints[x][y] = borderSymbol;
-		y++;
-	}
-	 
-	if (y >= mtrx.col) {
-		y = mtrx.col - 1;
- }
-
-	while (x < mtrx.row) {
-		
-		mapPoints[x][y] = borderSymbol;
-		x++;
-	}
-	if (x >= mtrx.row) x = mtrx.row - 1;
-
-	while (y >-1) {
-
-		mapPoints[x][y] = borderSymbol;
-		if(y >-1)
-		y--;
-	}
-
-	if (y <0) {
-		y = 0;
-	}
-
-	while (x > -1) {
-
-		mapPoints[x][y] = borderSymbol;
-		x--;
+	for (int i = 0; i < mtrx.row; i++) {
+		for (int j = 0; j < mtrx.col; j++) {
+			if (i == 0) mapPoints[mtrx.row - mtrx.row][j] = borderSymbol;
+			if (i == mtrx.row - 1) mapPoints[mtrx.row - mtrx.row][j] = borderSymbol;
+			else { mapPoints[i][mtrx.col - 1] = borderSymbol; mapPoints[i][mtrx.col - mtrx.col] = borderSymbol;  mapPoints[mtrx.row - 1][j] = borderSymbol; }
+		}
 	}
 }
 

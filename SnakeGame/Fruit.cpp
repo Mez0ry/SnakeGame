@@ -69,26 +69,4 @@ point& Fruit::getFruitCoord(int index)
 	return *FruitCoord[0];
 }
 
-int Fruit::getFruitCoordX(int index)
-{
-	 
-	for (int i = 0; i < EntsSize; i++) {
-		if (i == index) { return FruitCoord[i]->x; }
-	 }
-
-	return 0;
-}
-
-int Fruit::getFruitCoordY(int index)
-{
-	for (int i = 0; i < EntsSize; i++) {
-		if (i == index) { return FruitCoord[i]->y; }
-	}
-
-	return 0;
-}
-
- 
-	 
- 
  

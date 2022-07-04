@@ -10,11 +10,11 @@ public:
 	~Map();
 
 	void init();
-	void CleanMap();
-	void fillMap();
 	void drawMap();
 
 private:
+	void CleanMap();
+	void fillMap();
 	void release();
 };
 
