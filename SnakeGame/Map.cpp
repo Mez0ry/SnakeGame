@@ -1,19 +1,15 @@
 #include "Map.h"
 
-Map::Map(int row, int col)
+Map::Map(const int& row,const int& col)
 {
-	mtrx.row = row; // 25
-	mtrx.col = col;// 35 
+	mtrx.row = row; // 26
+	mtrx.col = col;// 36
 	mapPoints = new uint8_t * [mtrx.row]; // x = 20;
 	for (int i = 0; i < mtrx.row; i++) mapPoints[i] = new uint8_t[mtrx.col];
-	snake = new Snake();
 
 }
 
-Map::Map()
-{
-}
-
+ 
 Map::~Map()
 {
 	this->release();
@@ -23,12 +19,12 @@ Map::~Map()
 void Map::init()
 {
 	 
-	loadMap();
+	CleanMap();
 	fillMap();
  
 }
 
-void Map::loadMap()
+void Map::CleanMap()
 {
 	 
 	for (int i = 0; i < mtrx.row; i++) {

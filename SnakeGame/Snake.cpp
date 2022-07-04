@@ -1,20 +1,21 @@
 #include "Snake.h"
-
+ 
 Snake::Snake()
 {
-	SnakeCoord = new point();
-	 
+ 
+  
+		 
 }
 
 Snake::~Snake()
 {
-	delete SnakeCoord;
+ 
 }
 
 void Snake::setup()
 {
-	SnakeCoord->x = mtrx.row / 2;
-	SnakeCoord->y = mtrx.col / 2;
+	ptrSnakeCoords->x = mtrx.row / 2;
+	ptrSnakeCoords->y = mtrx.col / 2;
 
 }
 
@@ -23,24 +24,27 @@ void Snake::spawnSnake()
 	for (int row = 0; row < mtrx.row; row++) {
 		for (int col = 0; col < mtrx.col; col++) {
 
-			if (row == SnakeCoord->x && col == SnakeCoord->y)
+			if (row == ptrSnakeCoords->x && col == ptrSnakeCoords->y)
 				mapPoints[row][col] = SnakeSymbol;
-			else if (SnakeCoord->x >= mtrx.row || SnakeCoord->y >= mtrx.col || SnakeCoord->x <= mtrx.row - mtrx.row || SnakeCoord->y <= mtrx.col - mtrx.col)
+			else if (ptrSnakeCoords->x+1    == mtrx.row || ptrSnakeCoords->y+1   == mtrx.col || ptrSnakeCoords->x  == mtrx.row - mtrx.row  || ptrSnakeCoords->y  == mtrx.col - mtrx.col)
 				bGameOver = true;
+			else if(isFruit()){}
 		}
 	}
-}
+} 
 
- void Snake::CheckSnakeOnFruit()
-{
+ bool Snake::isFruit()
+{	 
 	 for (int i = 0; i < EntsSize; i++) {
-		 if (SnakeCoord->x == FruitCoord[i]->x && SnakeCoord->y == FruitCoord[i]->y) {
-			 mapPoints[FruitCoord[i]->x][FruitCoord[i]->y] = ' ';
-			 TotalScore += Score4Fruit;
-			 randomPosition(FruitCoord[i]->x, FruitCoord[i]->y);
+		 if (ptrSnakeCoords->x == getFruitCoord(i).x && ptrSnakeCoords->y == getFruitCoord(i).y) {
+			 mapPoints[getFruitCoord(i).x][getFruitCoord(i).y] = ' ';
+			 TotalScore += FruitScore;
+			 randomPosition(getFruitCoord(i).x, getFruitCoord(i).y, i);
+			 return true;
 		 }
+		  
 	 }
-
+	 return false;
 }
 
  
@@ -49,23 +53,23 @@ void Snake::spawnSnake()
 void Snake::SnakeMovesLogic()
 {
 	switch (CurrSnakeMove) {
-		case LEFT: {
-			SnakeCoord->y--;
+		case static_cast<SnakeMoving>(SnakeMoving::LEFT): {
+			ptrSnakeCoords->y--;
 			break;
 		}//
-		case RIGHT: {
-			SnakeCoord->y++;
+		case static_cast<SnakeMoving>(SnakeMoving::RIGHT): {
+			ptrSnakeCoords->y++;
 			break;
 		}//
-		case UP: {
-			SnakeCoord->x--;
+		case static_cast<SnakeMoving>(SnakeMoving::UP): {
+			ptrSnakeCoords->x--;
 			break;
 		}//
-		case  DOWN: {
-			SnakeCoord->x++;
+		case  static_cast<SnakeMoving>(SnakeMoving::DOWN): {
+			ptrSnakeCoords->x++;
 			break;
 		}//
 		 
-	}// Switch Closed
+	}
 
 }

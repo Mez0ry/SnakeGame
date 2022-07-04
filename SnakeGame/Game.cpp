@@ -1,19 +1,19 @@
 #include "Game.h"
-#define NOMINMAX
-#define WIN32_LEAN_AND_MEAN
-#include <Windows.h>
-
  
 Game::Game()
 {
-	map = new Map(26, 36);
+	map = new Map(MapRows, MapCols);
 	for (int i = 0; i < EntsSize; i++) {
 		fruit[i] = new Fruit();
 	}
-
 	EntSnake = new Snake();
 	gameLoop = true;
 
+	setConsole();
+	for (int i = 0; i < 6; i++) {
+		fruit[i]->setup();
+	}
+	EntSnake->setup();
 }
 
 Game::~Game()
@@ -25,7 +25,7 @@ Game::~Game()
 void Game::setConsole()
 {
 	SetConsoleTitle(L"Snake Game");
-
+	 RECT consoleDimensions;
 	HWND hWindowConsole = GetConsoleWindow();
 	 
 	GetWindowRect(hWindowConsole, &consoleDimensions); 
@@ -34,38 +34,28 @@ void Game::setConsole()
 
 }
 
-
 void Game::play()
 {
  
- 
-	setConsole();
-	for (int i = 0; i < EntsSize; i++) {
-		fruit[i]->setup();
-	}
-	EntSnake->setup();
 	while (gameLoop) {
-		if ((GetAsyncKeyState(VK_END) & 1)) bExit = true;
+		if ((GetAsyncKeyState(VK_END) & 1)) gameLoop = false;
 		
 		map->init();
 		for (int i = 0; i < EntsSize; i++) {
 			fruit[i]->spawnFruit();
 		}
+
 		EntSnake->spawnSnake();
 		if (bGameOver) gameOver();
 
 		EntSnake->SnakeMovesLogic();
-		EntSnake->CheckSnakeOnFruit();
 
 		handleEvents();
 		map->drawMap();
 		update();
-		if (bExit == true) {
-			exit();
-		}
-			 
 
 	}
+
 }
 
 void Game::gameOver()
@@ -82,40 +72,36 @@ void Game::gameOver()
 				EntSnake->setup();
 			}
 			else {
-				bExit = true;
+				gameLoop = false;
 				
 			}
-
- 
-
-
- 
 	
 }
 
 void Game::handleEvents()
 {
-
+ 
 	if (_kbhit()) {
 		switch (_getch()) {
-		case LEFT: {
-			CurrSnakeMove = LEFT;
+
+		case static_cast<int>(SnakeMoving::LEFT): {
+			CurrSnakeMove = SnakeMoving::LEFT;
 			break;
 		}//
-		case RIGHT: {
-			CurrSnakeMove = RIGHT;
+		case static_cast<int>(SnakeMoving::RIGHT): {
+			CurrSnakeMove = SnakeMoving::RIGHT;
 			break;
 		}//
-		case UP: {
-			CurrSnakeMove = UP;
+		case static_cast<int>(SnakeMoving::UP): {
+			CurrSnakeMove = SnakeMoving::UP;
 			break;
 		}//
-		case DOWN: {
-			CurrSnakeMove = DOWN;
+		case static_cast<int>(SnakeMoving::DOWN): {
+			CurrSnakeMove = SnakeMoving::DOWN;
 			break;
 		}//
 
-			 
+
 		}
 	}
  
@@ -124,14 +110,10 @@ void Game::handleEvents()
 void Game::update()
 {
 	system("cls");
+ 
 }
  
 
-void Game::exit()
-{
-	gameLoop = false;
-	map->release();
-
-}
+ 
 
  

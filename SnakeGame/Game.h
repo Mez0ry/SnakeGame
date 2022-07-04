@@ -11,18 +11,13 @@ class Game
 public:
 	Game();
 	~Game();
-
-	void setConsole();
 	void play();
-	void gameOver();
-
-	void handleEvents();
-
-	void update();
-	void exit();
- 
-
 private:
+	void setConsole();
+	void gameOver();
+	void handleEvents();
+	void update();
+
 	Snake* EntSnake;
 	Fruit* fruit[EntsSize];
 

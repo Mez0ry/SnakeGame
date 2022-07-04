@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <vector>
 #include <Windows.h>
 #include <TlHelp32.h>
 
@@ -9,11 +8,15 @@
 
 #define EntsSize 6
 
-inline bool gameLoop = false, bExit = false, bGameOver = false;
-inline  int TotalScore{}, Score4Fruit = 0;
+inline bool gameLoop = false, bGameOver = false;
+inline  int TotalScore{}, FruitScore = 0;
+
+inline const int MapRows{ 30 }, MapCols{ 30 };
 
 struct point {
-	int x, y;
+	point(){}
+	~point(){}
+	int x{}, y{};
 };
 
 inline uint8_t** mapPoints;
@@ -25,11 +28,9 @@ struct Matrix {
 
 inline Matrix mtrx;
 
-inline RECT consoleDimensions;
-
 inline char borderSymbol = '*', SnakeSymbol = '0', FruitSymbol = '+';
 
-enum SnakeMoving : char { LEFT = 'a', RIGHT = 'd', UP = 'w', DOWN = 's' };
+enum class SnakeMoving : char { LEFT = 'a', RIGHT = 'd', UP = 'w', DOWN = 's' };
 
- inline   SnakeMoving  CurrSnakeMove;
+ inline SnakeMoving  CurrSnakeMove;
 

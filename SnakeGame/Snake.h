@@ -2,6 +2,7 @@
 #include "data.h"
 #include <conio.h>
 #include "Fruit.h"
+ 
 
 class Snake : public Fruit
 {
@@ -11,13 +12,13 @@ public:
 
 	void setup();
 	void spawnSnake();
-	 void CheckSnakeOnFruit();
+	bool isFruit();
 	 
 	void SnakeMovesLogic();
-protected:
-	point* SnakeCoord;
+ 
 private:
-	
-	 
+ 
+	std::unique_ptr<point> ptrSnakeCoords = std::make_unique<point>();
+
 };
 

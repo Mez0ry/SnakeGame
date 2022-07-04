@@ -6,20 +6,15 @@
 class Map : public Snake
 {
 public:
-	Map(int height, int width);
-	Map();
-
+	explicit  Map(const int& height, const  int& width);
 	~Map();
-	void init();
-	void loadMap();
-	void fillMap();
-	void release();
 
+	void init();
+	void CleanMap();
+	void fillMap();
 	void drawMap();
 
 private:
-	 
-	Snake* snake;
-	 
+	void release();
 };
 

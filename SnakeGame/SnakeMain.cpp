@@ -8,7 +8,6 @@ int main()
 
 	gm->play();
 
-	delete gm;
 	return 0;
 }
  
