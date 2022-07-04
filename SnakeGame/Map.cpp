@@ -1,97 +1,72 @@
 #include "Map.h"
 
-Map::Map(int row, int col)
+Map::Map(const int& row,const int& col)
 {
-	mtrx.row = row; // 25
-	mtrx.col = col;// 35 
-	mapPoints = new uint8_t * [mtrx.row]; // x = 20;
-	for (int i = 0; i < mtrx.row; i++) mapPoints[i] = new uint8_t[mtrx.col];
-	snake = new Snake();
-
-}
-
-Map::Map()
-{
+		m_Map = new uint8_t * [row];
+		for (int write_index = 0; write_index < row; write_index++)
+			m_Map[write_index] = new uint8_t[col];	 
 }
 
 Map::~Map()
 {
-	this->release();
-
+	this->Release();
 }
 
-void Map::init()
+void Map::Init()
 {
-	 
-	loadMap();
-	fillMap();
- 
+	this->CleanMap();
+	this->FillMap();
 }
 
-void Map::loadMap()
+void Map::CleanMap()
 {
-	 
-	for (int i = 0; i < mtrx.row; i++) {
-		for (int j = 0; j < mtrx.col; j++) {
-			mapPoints[i][j] = ' ';
-			 
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			m_Map[row_index][col_index] = ' ';
 		}
 	 }
+}
+
+void Map::FillMap()
+{
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			if (row_index == 0) {
+
+				m_Map[g_MapRows - g_MapRows][col_index] = m_BorderSymbol;
+			}
+
+			if (row_index == g_MapRows - 1) {
+				m_Map[g_MapRows - g_MapRows][col_index] = m_BorderSymbol;
+			}
+
+			else {
+				m_Map[row_index][g_MapCols - 1] = m_BorderSymbol;
+				m_Map[row_index][g_MapCols - g_MapCols] = m_BorderSymbol;
+				m_Map[g_MapRows - 1][col_index] = m_BorderSymbol;
+			}
+
+		}
+	}
 
 }
 
-
-void Map::fillMap()
+void Map::Release()
 {
-	bool end = false;
-	int x{}, y{};
-	while (y < mtrx.col){
-		mapPoints[x][y] = borderSymbol;
-		y++;
-	}
-	 
-	if (y >= mtrx.col) {
-		y = mtrx.col - 1;
- }
-
-	while (x < mtrx.row) {
-		
-		mapPoints[x][y] = borderSymbol;
-		x++;
-	}
-	if (x >= mtrx.row) x = mtrx.row - 1;
-
-	while (y >-1) {
-
-		mapPoints[x][y] = borderSymbol;
-		if(y >-1)
-		y--;
-	}
-
-	if (y <0) {
-		y = 0;
-	}
-
-	while (x > -1) {
-
-		mapPoints[x][y] = borderSymbol;
-		x--;
+	if (m_Map != nullptr) {
+		for (size_t delete_index = 0; delete_index < g_MapRows; delete_index++)
+			delete[] m_Map[delete_index];
+		delete[] m_Map;
 	}
 }
 
-void Map::release()
+void Map::DrawMap()
 {
-	for (int i = 0; i < mtrx.row; i++)  delete [] mapPoints[i];
-}
-
-
-void Map::drawMap()
-{
-	for (int i = 0; i < mtrx.row; i++) {
-		for (int j = 0; j < mtrx.col; j++) {
-			std::cout <<mapPoints[i][j];
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			std::cout << m_Map[row_index][col_index];
 		}
 		std::cout << '\n';
 	}
-	std::cout <<static_cast<char>('\n\n') << "    Score: " << TotalScore << '\n';
+	std::cout <<static_cast<char>('\n\n') << "\t\tScore: " << g_TotalScore << '\n';
 }

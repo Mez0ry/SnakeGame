@@ -147,14 +147,17 @@
     <ClCompile Include="Fruit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="randomize.cpp" />
     <ClCompile Include="Snake.cpp" />
     <ClCompile Include="SnakeMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="crt_memory_leaks.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="Fruit.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="randomize.hpp" />
     <ClInclude Include="Snake.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

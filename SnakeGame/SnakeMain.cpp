@@ -1,14 +1,11 @@
 #include "Game.h"
 #include "data.h"
 
-
 int main()
-{
-	Game* gm = new Game();
+{  
+	Game gm;
+	gm.play();
+	system("cls");
 
-	gm->play();
-
-	delete gm;
 	return 0;
 }
- 
