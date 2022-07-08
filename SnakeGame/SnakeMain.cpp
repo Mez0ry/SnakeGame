@@ -4,9 +4,10 @@
 
 int main()
 {
-	Game* gm = new Game();
+	Game gm;
 
-	gm->play();
+	gm.play();
+	system("cls");
 
 	return 0;
 }

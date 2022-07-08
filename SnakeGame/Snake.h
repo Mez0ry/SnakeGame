@@ -2,23 +2,31 @@
 #include "data.h"
 #include <conio.h>
 #include "Fruit.h"
- 
 
-class Snake : public Fruit
+
+class Snake
 {
+private:
+	char SnakeSymbol = '0';
+	SnakeMoving  CurrSnakeMove;
+	std::unique_ptr<point> m_SnakeCoords = std::make_unique<point>();
+
 public:
 	Snake();
 	~Snake();
 
-	void setup();
-	void spawnSnake();
-	bool isFruit();
-	 
+	void Setup(uint8_t** MapState);
+	void SpawnSnake();
 	void SnakeMovesLogic();
- 
-private:
- 
-	std::unique_ptr<point> ptrSnakeCoords = std::make_unique<point>();
 
+	bool isFruit();
+	bool& GetGameVarState() { return *bGameOver; }
+
+	SnakeMoving& GetTypeMove() { return CurrSnakeMove; }
+	 
+private:
+	std::unique_ptr<bool> bGameOver = std::make_unique<bool>();
+	uint8_t** m_MapState = nullptr;
+ 	std::unique_ptr<Fruit> fruit = std::make_unique<Fruit>();
 };
 

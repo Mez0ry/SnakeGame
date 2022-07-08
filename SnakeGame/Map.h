@@ -1,20 +1,24 @@
 #pragma once
 #include "data.h"
-#include "Snake.h"
+  
+ 
 
-
-class Map : public Snake
+class Map 
 {
+private:
+	const char borderSymbol = '*';
+	uint8_t** mapPoints;
 public:
 	explicit  Map(const int& height, const  int& width);
 	~Map();
 
 	void init();
-	void drawMap();
+	void DrawMap();
 
+	uint8_t** GetMap() { return mapPoints; }
 private:
 	void CleanMap();
-	void fillMap();
+	void FillMap();
 	void release();
 };
 

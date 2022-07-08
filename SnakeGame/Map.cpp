@@ -2,10 +2,9 @@
 
 Map::Map(const int& row,const int& col)
 {
-	mtrx.row = row; 
-	mtrx.col = col;
-	mapPoints = new uint8_t * [mtrx.row]; 
-	for (int i = 0; i < mtrx.row; i++) mapPoints[i] = new uint8_t[mtrx.col];
+ 
+	mapPoints = new uint8_t * [row];
+	for (int i = 0; i < row; i++) mapPoints[i] = new uint8_t[col];
 
 }
 
@@ -20,15 +19,15 @@ void Map::init()
 {
 	 
 	CleanMap();
-	fillMap();
+	FillMap();
  
 }
 
 void Map::CleanMap()
 {
 	 
-	for (int i = 0; i < mtrx.row; i++) {
-		for (int j = 0; j < mtrx.col; j++) {
+	for (int i = 0; i < g_MapRows; i++) {
+		for (int j = 0; j < g_MapCols; j++) {
 			mapPoints[i][j] = ' ';
 			 
 		}
@@ -37,30 +36,31 @@ void Map::CleanMap()
 }
 
 
-void Map::fillMap()
+void Map::FillMap()
 {
-	for (int i = 0; i < mtrx.row; i++) {
-		for (int j = 0; j < mtrx.col; j++) {
-			if (i == 0) mapPoints[mtrx.row - mtrx.row][j] = borderSymbol;
-			if (i == mtrx.row - 1) mapPoints[mtrx.row - mtrx.row][j] = borderSymbol;
-			else { mapPoints[i][mtrx.col - 1] = borderSymbol; mapPoints[i][mtrx.col - mtrx.col] = borderSymbol;  mapPoints[mtrx.row - 1][j] = borderSymbol; }
+	for (int i = 0; i < g_MapRows; i++) {
+		for (int j = 0; j < g_MapCols; j++) {
+			if (i == 0) mapPoints[g_MapRows - g_MapRows][j] = borderSymbol;
+			if (i == g_MapRows - 1) mapPoints[g_MapRows - g_MapRows][j] = borderSymbol;
+			else { mapPoints[i][g_MapCols - 1] = borderSymbol; mapPoints[i][g_MapCols  - g_MapCols] = borderSymbol;  mapPoints[g_MapRows - 1][j] = borderSymbol; }
 		}
 	}
 }
 
 void Map::release()
 {
-	for (int i = 0; i < mtrx.row; i++)  delete [] mapPoints[i];
+	for (int i = 0; i < g_MapRows; i++)  delete[]  mapPoints[i];
+	delete[] mapPoints;
 }
 
 
-void Map::drawMap()
+void Map::DrawMap()
 {
-	for (int i = 0; i < mtrx.row; i++) {
-		for (int j = 0; j < mtrx.col; j++) {
+	for (int i = 0; i < g_MapRows; i++) {
+		for (int j = 0; j < g_MapCols; j++) {
 			std::cout <<mapPoints[i][j];
 		}
 		std::cout << '\n';
 	}
-	std::cout <<static_cast<char>('\n\n') << "    Score: " << TotalScore << '\n';
+	std::cout <<static_cast<char>('\n\n') << "    Score: " << g_TotalScore << '\n';
 }
