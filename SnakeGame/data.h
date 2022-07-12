@@ -1,6 +1,7 @@
-#pragma once
 #ifndef DATA
 #define DATA
+#pragma once
+
 #include <iostream>
 #include <Windows.h>
 #include <TlHelp32.h>
@@ -8,9 +9,10 @@
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 800
 
-#define EntsSize 6
+#define FRUIT_SIZE 6
 
-inline  int g_TotalScore{};
+inline int g_TotalScore{};
+
 const int g_MapRows{ 30 }, g_MapCols{ 30 };
 
 struct point {
@@ -19,8 +21,7 @@ struct point {
 	int x{}, y{};
 };
 
-
 enum class SnakeMoving : char { LEFT = 'a', RIGHT = 'd', UP = 'w', DOWN = 's' };
-#endif // DATA
+#endif // !DATA
  
 

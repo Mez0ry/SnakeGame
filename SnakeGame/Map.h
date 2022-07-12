@@ -1,24 +1,26 @@
+#ifndef MAP
+#define MAP
 #pragma once
+
 #include "data.h"
-  
- 
 
 class Map 
 {
 private:
-	const char borderSymbol = '*';
-	uint8_t** mapPoints;
+	const char m_BorderSymbol = '*';
+	uint8_t** m_Map;
 public:
 	explicit  Map(const int& height, const  int& width);
 	~Map();
 
-	void init();
+	void Init();
 	void DrawMap();
 
-	uint8_t** GetMap() { return mapPoints; }
+	uint8_t** get_Map() { return m_Map; }
 private:
 	void CleanMap();
 	void FillMap();
-	void release();
+	void Release();
 };
 
+#endif // !MAP

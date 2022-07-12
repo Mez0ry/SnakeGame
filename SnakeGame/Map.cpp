@@ -2,65 +2,74 @@
 
 Map::Map(const int& row,const int& col)
 {
- 
-	mapPoints = new uint8_t * [row];
-	for (int i = 0; i < row; i++) mapPoints[i] = new uint8_t[col];
-
+		m_Map = new uint8_t * [row];
+		for (int write_index = 0; write_index < row; write_index++)
+			m_Map[write_index] = new uint8_t[col];	 
 }
 
  
 Map::~Map()
 {
-	this->release();
-
+	this->Release();
 }
 
-void Map::init()
+void Map::Init()
 {
-	 
-	CleanMap();
-	FillMap();
- 
+	this->CleanMap();
+	this->FillMap();
 }
 
 void Map::CleanMap()
 {
-	 
-	for (int i = 0; i < g_MapRows; i++) {
-		for (int j = 0; j < g_MapCols; j++) {
-			mapPoints[i][j] = ' ';
-			 
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			m_Map[row_index][col_index] = ' ';
 		}
 	 }
-
 }
 
 
 void Map::FillMap()
 {
-	for (int i = 0; i < g_MapRows; i++) {
-		for (int j = 0; j < g_MapCols; j++) {
-			if (i == 0) mapPoints[g_MapRows - g_MapRows][j] = borderSymbol;
-			if (i == g_MapRows - 1) mapPoints[g_MapRows - g_MapRows][j] = borderSymbol;
-			else { mapPoints[i][g_MapCols - 1] = borderSymbol; mapPoints[i][g_MapCols  - g_MapCols] = borderSymbol;  mapPoints[g_MapRows - 1][j] = borderSymbol; }
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			if (row_index == 0) {
+
+				m_Map[g_MapRows - g_MapRows][col_index] = m_BorderSymbol;
+			}
+
+			if (row_index == g_MapRows - 1) {
+				m_Map[g_MapRows - g_MapRows][col_index] = m_BorderSymbol;
+			}
+
+			else {
+				m_Map[row_index][g_MapCols - 1] = m_BorderSymbol;
+				m_Map[row_index][g_MapCols - g_MapCols] = m_BorderSymbol;
+				m_Map[g_MapRows - 1][col_index] = m_BorderSymbol;
+			}
+
 		}
 	}
+
 }
 
-void Map::release()
+void Map::Release()
 {
-	for (int i = 0; i < g_MapRows; i++)  delete[]  mapPoints[i];
-	delete[] mapPoints;
+	if (m_Map != nullptr) {
+		for (size_t delete_index = 0; delete_index < g_MapRows; delete_index++)
+			delete[] m_Map[delete_index];
+		delete[] m_Map;
+	}
 }
 
 
 void Map::DrawMap()
 {
-	for (int i = 0; i < g_MapRows; i++) {
-		for (int j = 0; j < g_MapCols; j++) {
-			std::cout <<mapPoints[i][j];
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			std::cout << m_Map[row_index][col_index];
 		}
 		std::cout << '\n';
 	}
-	std::cout <<static_cast<char>('\n\n') << "    Score: " << g_TotalScore << '\n';
+	std::cout <<static_cast<char>('\n\n') << "\t\tScore: " << g_TotalScore << '\n';
 }

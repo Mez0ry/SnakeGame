@@ -1,50 +1,47 @@
 #include "Snake.h"
  
-Snake::Snake()
+Snake::Snake() : m_bGameOver(false), m_CurrSnakeMove() , m_MapState(nullptr)
 {
-	CurrSnakeMove = {};
-	*bGameOver = false;
+	this->m_Fruit = NULL;
 }
 
-Snake::~Snake()
+void Snake::Setup(uint8_t** MapState, Fruit& fruit)
 {
- 
-}
+	this->m_Fruit = &fruit;
+	this->m_MapState = MapState;
 
-void Snake::Setup(uint8_t** MapState)
-{
 	m_SnakeCoords->x = g_MapRows / 2;
 	m_SnakeCoords->y = g_MapCols / 2;
-	this->m_MapState = MapState;
 }
 
 void Snake::SpawnSnake()
 {
-	bool once = false;
-	for (int row = 0; row < g_MapRows; row++) {
-		for (int col = 0; col < g_MapCols; col++) {
-			if (row == m_SnakeCoords->x && col == m_SnakeCoords->y && m_MapState != nullptr && !once) {
-				m_MapState[row][col] = SnakeSymbol; once = true;
+	bool b_SpawnOnce = false;
+
+	for (size_t row_index = 0; row_index < g_MapRows; ++row_index) {
+		for (size_t col_index = 0; col_index < g_MapCols; ++col_index) {
+			if (row_index == m_SnakeCoords->x && col_index == m_SnakeCoords->y && !b_SpawnOnce) {
+				m_MapState[row_index][col_index] = m_SnakeSymbol; 
+				b_SpawnOnce = true;
 			}
 
 			else if (m_SnakeCoords->x + 1 == g_MapRows || m_SnakeCoords->y + 1 == g_MapCols || m_SnakeCoords->x == g_MapRows - g_MapRows || m_SnakeCoords->y == g_MapCols - g_MapCols) {
-				(*bGameOver) = true;
+				(m_bGameOver) = true;
 			}
-			else if(isFruit()){}
+			else if(isFruit()){} 
 		}
 	}
 } 
 
- bool Snake::isFruit()
+ bool Snake::isFruit()  
 {	 
-	 for (int i = 0; i < EntsSize; i++) {
-		 if (m_SnakeCoords->x == fruit->GetFruitCoord(i).x && m_SnakeCoords->y == fruit->GetFruitCoord(i).y) {
-			 m_MapState[fruit->GetFruitCoord(i).x][fruit->GetFruitCoord(i).y] = ' ';
-			 g_TotalScore += fruit->GetFruitScore();
-			 fruit->RandomPosition(fruit->GetFruitCoord(i).x, fruit->GetFruitCoord(i).y, i);
+	 for (size_t fruit_index = 0; fruit_index < FRUIT_SIZE; fruit_index++) {
+		 if (m_SnakeCoords->x == m_Fruit->get_FruitCoord(fruit_index).x && m_SnakeCoords->y == m_Fruit->get_FruitCoord(fruit_index).y) {
+			 m_MapState[m_Fruit->get_FruitCoord(fruit_index).x][m_Fruit->get_FruitCoord(fruit_index).y] = ' ';
+			 g_TotalScore += m_Fruit->get_Score();
+			 m_Fruit->RandomPosition(m_Fruit->get_FruitCoord(fruit_index).x, m_Fruit->get_FruitCoord(fruit_index).y);
 			 return true;
 		 }
-		  
 	 }
 	 return false;
 }
@@ -54,7 +51,7 @@ void Snake::SpawnSnake()
 
 void Snake::SnakeMovesLogic()
 {
-	switch (CurrSnakeMove) {
+	switch (m_CurrSnakeMove) {
 		case static_cast<SnakeMoving>(SnakeMoving::LEFT): {
 			m_SnakeCoords->y--;
 			break;

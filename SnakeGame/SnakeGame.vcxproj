@@ -151,6 +151,7 @@
     <ClCompile Include="SnakeMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="crt_memory_leaks.h" />
     <ClInclude Include="data.h" />
     <ClInclude Include="Fruit.h" />
     <ClInclude Include="Game.h" />

@@ -1,4 +1,7 @@
+#ifndef GAME
+#define GAME
 #pragma once
+
 #include <vector>
 #include "data.h"
 #include "Map.h"
@@ -6,26 +9,24 @@
 #include "Fruit.h"
 #include <stack>
 
-class Game
+class Game 
 {
+private:
+	bool m_bGameLoop = false;
+	std::stack<int> m_gameScores;
 public:
 	Game();
 	~Game();
 	void play();
-
 private:
-	void setConsole();
-	void gameOver();
-	void handleEvents();
-	void update();
-
-	bool bGameLoop = false;
-	Snake* m_EntSnake;
-	Fruit* m_fruit[EntsSize];
-
-	Map* m_map;
+	void SetConsole();
+	void GameOver();
+	void HandleEvents();
+	void Update();
  
-	std::stack<int> m_gameScores;
+	Snake m_Snake;
+	Fruit m_Fruit;
+	Map m_Map;
 
 	enum class GameOverState : char {
 		SUCCESS = 'S', PRINT = 'P' , FAILURE = 'F'
@@ -33,3 +34,4 @@ private:
 
 };
 
+#endif // !GAME

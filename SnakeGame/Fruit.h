@@ -1,27 +1,28 @@
+#ifndef FRUIT
+#define FRUIT
 #pragma once
+
 #include "data.h"
 #include <random>
-
- 
 
 class Fruit 
 {
 private:
-	char  FruitSymbol = '+';
-	static inline std::unique_ptr<point* []> m_ptrFruitCoord = std::make_unique<point* []>(EntsSize);
+	char  m_FruitSymbol = '+';
+	point m_pFruitCoord[FRUIT_SIZE];
 public:
 	Fruit();
-	~Fruit();
+	~Fruit(){ }
 
 	void Setup(uint8_t** MapState);
 	void SpawnFruit();
-	void RandomPosition(int& row, int& col, int index);
+	void RandomPosition(int& row, int& col);
 
-	point& GetFruitCoord(int index);
-	int GetFruitScore() { return *m_ptrFruitScore; }
-
+	point& get_FruitCoord(const int& index);
+	int get_Score() { return m_FruitScore; }
 private:
-	static inline  std::unique_ptr<int> m_ptrFruitScore = std::make_unique<int>();
-	uint8_t** m_MapArr;
+	int m_FruitScore;
+	uint8_t** m_Map;
 };
 
+#endif // !FRUIT
