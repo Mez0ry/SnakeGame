@@ -14,7 +14,7 @@ Game::~Game()
 
 void Game::SetConsole()
 {
-	SetConsoleTitle(L"Snake Game");
+	SetConsoleTitle("Snake Game");
 	RECT consoleDimensions;
 	HWND hWindowConsole = GetConsoleWindow();
 	 
